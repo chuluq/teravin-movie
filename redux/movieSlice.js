@@ -1,9 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-// status: 'idle' | 'loading' | 'succeeded' | 'failed',
-// error: string | null
-
 const initialState = {
   movies: [],
   status: 'idle',

@@ -1,19 +1,19 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Fragment } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, FlatList } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { colors } from './utils';
+import { colors } from '../utils';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   selectAllMovies,
   fetchMovies,
   showNotification,
-} from './redux/movieSlice';
+} from '../redux/movieSlice';
 
-import Loading from './components/Loading';
-import Error from './components/Error';
-import MovieItem from './components/MovieItem';
-import Notification from './components/Notification';
+import Loading from '../components/Loading';
+import Error from '../components/Error';
+import MovieItem from '../components/MovieItem';
+import Notification from '../components/Notification';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -31,33 +31,32 @@ const Home = () => {
         )
       );
     }
-
     setInterval(() => {
       dispatch(showNotification());
     }, 60000);
-  }, [movieStatus, dispatch]);
-
-  if (movieStatus === 'loading') {
-    return <Loading />;
-  }
-
-  if (movieStatus === 'error') {
-    return <Error errorMessage={error} />;
-  }
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style='auto' />
       <Text style={styles.header}>Movie List</Text>
-      <FlatList
-        data={movies}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => {
-          return (
-            <MovieItem title={item.original_title} date={item.release_date} />
-          );
-        }}
-      />
+      {movieStatus === 'loading' ? (
+        <Loading />
+      ) : movieStatus === 'failed' ? (
+        <Error errorMessage={error} />
+      ) : movieStatus === 'succeeded' ? (
+        <FlatList
+          data={movies}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => {
+            return (
+              <MovieItem title={item.original_title} date={item.release_date} />
+            );
+          }}
+        />
+      ) : (
+        <Fragment />
+      )}
       {notification && <Notification />}
     </SafeAreaView>
   );
