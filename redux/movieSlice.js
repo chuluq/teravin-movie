@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { URI } from '../utils';
 import axios from 'axios';
 
 // status: 'idle' | 'loading' | 'succeeded' | 'failed',
@@ -7,22 +6,28 @@ import axios from 'axios';
 
 const initialState = {
   movies: [],
-  page: 1,
   status: 'idle',
   error: null,
+  notification: false,
 };
 
-export const fetchMovies = createAsyncThunk('movies/fetchMovies', async () => {
-  const response = await axios.get(`${URI}`);
-  return response.data.results;
-});
+export const fetchMovies = createAsyncThunk(
+  'movies/fetchMovies',
+  async (uri, thunkAPI) => {
+    const response = await axios.get(`${uri}`);
+    return response.data.results;
+  }
+);
 
 export const movieSlice = createSlice({
   name: 'movies',
   initialState,
   reducers: {
-    updatePage: (state, action) => {
-      state.page == action.page;
+    showNotification: (state) => {
+      state.notification = true;
+    },
+    hideNotification: (state) => {
+      state.notification = false;
     },
   },
   extraReducers: {
@@ -31,7 +36,7 @@ export const movieSlice = createSlice({
     },
     [fetchMovies.fulfilled]: (state, action) => {
       state.status = 'succeeded';
-      state.movies = state.movies.concat(action.payload);
+      state.movies = action.payload;
     },
     [fetchMovies.rejected]: (state, action) => {
       state.status = 'failed';
@@ -40,7 +45,8 @@ export const movieSlice = createSlice({
   },
 });
 
-export const { updatePage } = movieSlice.actions;
+export const { updatePage, showNotification, hideNotification } =
+  movieSlice.actions;
 
 export default movieSlice.reducer;
 
