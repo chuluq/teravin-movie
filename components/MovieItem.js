@@ -1,14 +1,16 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import { colors } from '../utils';
 
-const MovieItem = () => {
+const MovieItem = ({ title, date }) => {
   return (
-    <View style={{ marginHorizontal: 16, marginVertical: 14 }}>
-      <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Spider-Man</Text>
-      <Text style={{ marginTop: 8 }}>26th May, 2022</Text>
-      <View style={styles.line} />
-    </View>
+    <ScrollView>
+      <View style={{ marginHorizontal: 16, marginVertical: 14 }}>
+        <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{title}</Text>
+        <Text style={{ marginTop: 8 }}>{date}</Text>
+        <View style={styles.line} />
+      </View>
+    </ScrollView>
   );
 };
 

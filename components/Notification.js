@@ -18,11 +18,11 @@ const Notification = () => {
 const styles = StyleSheet.create({
   container: {
     marginTop: 'auto',
-    backgroundColor: colors.primaryBlue,
-    zIndex: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    backgroundColor: colors.primaryBlue,
+    zIndex: 10,
   },
   details: {
     paddingVertical: 8,

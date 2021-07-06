@@ -2,11 +2,11 @@ import React from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import { colors } from '../utils';
 
-const Error = () => {
+const Error = ({ errorMessage }) => {
   return (
     <View style={styles.center}>
       <Image source={require('../assets/error.png')} style={styles.image} />
-      <Text style={styles.errorText}>Network Error: something is wrong!</Text>
+      <Text style={styles.errorText}>Network Error: {errorMessage}</Text>
     </View>
   );
 };
