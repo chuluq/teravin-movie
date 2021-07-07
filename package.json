@@ -8,6 +8,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@react-native-community/netinfo": "6.0.0",
     "@reduxjs/toolkit": "^1.6.0",
     "axios": "^0.21.1",
     "expo": "~42.0.0",
